@@ -105,13 +105,13 @@ if 'bsd' in sys.platform:
 
 setup(
     name = 'hidapi',
-    version = '0.10.1',
+    version = '0.10.1.post1',
     description = 'A Cython interface to the hidapi from https://github.com/libusb/hidapi',
-    author = 'Gary Bishop',
-    author_email = 'gb@cs.unc.edu',
-    maintainer = 'Pavol Rusnak',
-    maintainer_email = 'pavol@rusnak.io',
-    url = 'https://github.com/trezor/cython-hidapi',
+    author = 'Gary Bishop, Ariel Mendelzon',
+    author_email = 'gb@cs.unc.edu, amendelzon@iovlabs.org',
+    maintainer = 'Pavol Rusnak, Ariel Mendelzon',
+    maintainer_email = 'pavol@rusnak.io, amendelzon@iovlabs.org',
+    url = 'https://github.com/rsksmart/cython-hidapi',
     package_dir = {'hid': 'hidapi/*'},
     classifiers = [
         'Operating System :: MacOS :: MacOS X',
