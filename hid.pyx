@@ -42,6 +42,15 @@ def enumerate(int vendor_id=0, int product_id=0):
     c = c.next
   hid_free_enumeration(info)
   return res
+ 
+def hidapi_exit():
+  """Callback for when the script exits.
+
+  This prevents memory leaks in the hidapi C library.
+  Note that the counterpart, hid_init(), is not called explicitly. It will
+  be called internally when first needed.
+  """
+  hid_exit()
 
 cdef class device:
   cdef hid_device *_c_hid
