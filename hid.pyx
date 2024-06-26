@@ -3,6 +3,8 @@ from chid cimport *
 from libc.stddef cimport wchar_t, size_t
 from cpython.unicode cimport PyUnicode_FromUnicode
 
+__version__ = "0.10.1.post2"
+
 cdef extern from "ctype.h":
   int wcslen(wchar_t*)
 
