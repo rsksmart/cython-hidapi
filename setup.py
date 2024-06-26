@@ -3,12 +3,13 @@ from setuptools import setup, Extension
 import os
 import sys
 import subprocess
+import re
 
 hidapi_topdir = os.path.join('hidapi')
 hidapi_include = os.path.join(hidapi_topdir, 'hidapi')
 system_hidapi = 0
 libs= []
-src = ['hid.pyx', 'chid.pxd']
+src = ['hid.pyx']
 
 def hidapi_src(platform):
     return os.path.join(hidapi_topdir, platform, 'hid.c')
@@ -38,7 +39,7 @@ if sys.platform.startswith('linux'):
             )
         )
     libs = ['udev', 'rt']
-    src = ['hidraw.pyx', 'chid.pxd']
+    src = ['hidraw.pyx']
     if system_hidapi == 1:
         libs.append('hidapi-hidraw')
     else:
@@ -103,12 +104,22 @@ if 'bsd' in sys.platform:
             )
         ]
 
+def find_version():
+    tld = os.path.abspath(os.path.dirname(__file__))
+    filename = os.path.join(tld, 'hid.pyx')
+    with open(filename) as f:
+        text = f.read()
+    match = re.search(r"^__version__ = \"(.*)\"$", text, re.MULTILINE)
+    if not match:
+        raise RuntimeError('cannot find version')
+    return match.group(1)
+
 setup(
     name = 'hidapi',
-    version = '0.10.1.post1',
+    version = find_version(),
     description = 'A Cython interface to the hidapi from https://github.com/libusb/hidapi',
     author = 'Gary Bishop, Ariel Mendelzon',
-    author_email = 'gb@cs.unc.edu, amendelzon@iovlabs.org',
+    author_email = 'gb@cs.unc.edu, amendelzon@rootstocklabs.org',
     maintainer = 'Pavol Rusnak, Ariel Mendelzon',
     maintainer_email = 'pavol@rusnak.io, amendelzon@iovlabs.org',
     url = 'https://github.com/rsksmart/cython-hidapi',
@@ -124,6 +135,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.12',
     ],
     ext_modules = modules,
     setup_requires = ['Cython'],
